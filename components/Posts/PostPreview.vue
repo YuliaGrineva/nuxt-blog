@@ -12,7 +12,6 @@
   </nuxt-link>
 </template>
 
-
 <script>
 export default {
   name: 'PostPreview',
@@ -39,7 +38,7 @@ export default {
     }
   },
   computed: {
-    postLink(){
+    postLink() {
       return this.isAdmin ? '/admin/' + this.id : '/posts/' + this.id
     }
   }

@@ -1,38 +1,35 @@
 <template>
-  <div class="single-post-page">
-    <section class="post">
-      <h1 class="post-title">{{ loadedPost.title }}</h1>
-      <div class="post-details">
-        <div class="post-detail">Last updated on {{ loadedPost.updatedDate }}</div>
-        <div class="post-detail">Written by {{ loadedPost.author }}</div>
+  <div className="single-post-page">
+    <section className="post">
+      <h1 className="post-title">{{ loadedPost.title }}</h1>
+      <div className="post-details">
+        <div className="post-detail">Last updated on {{ loadedPost.updatedDate }}</div>
+        <div className="post-detail">Written by {{ loadedPost.author }}</div>
       </div>
-      <p>{{ loadedPost.content }}</p>
+      <p className="post-content">{{ loadedPost.content }}</p>
     </section>
-    <section class="post-feedback">
-      <p>Let me know what you think about the post, send a mail to <a href="mailto:jgrinja@gmail.com">jgrinja@gmail.com</a> </p>
-
+    <section className="post-feedback">
+      <p>Let me know what you think about the post, send a mail to <a href="mailto:feedback@my-awesome-domain.com">feedback@my-awesome-domain.com</a>.
+      </p>
     </section>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  asyncData(context, callback) {
-    setTimeout(() => {
-      callback(null, {
-        loadedPost: {
-          id: "1",
-          title: "Hello there (ID: " + context.route.params.id + ")!",
-          previewText: "This my first post!",
-          author: "Yulia",
-          updatedDate: new Date(),
-          content: "I love you! Some Text, but not a preview text!",
-          thumbnail:"https://static.pexels.com/photos/270348/pexels-photo-270348.jpeg"},
-      });
-    } , 1000)
+  asyncData(context) {
+    return axios.get('https://nuxt-blog-9e1ae-default-rtdb.europe-west1.firebasedatabase.app/posts/' + context.params.id + '.json')
+      .then(res => {
+        return {
+          loadedPost: res.data
+        }
+      })
+      .catch(e => context.error(e))
   }
-}
+};
 </script>
+
 
 <style scoped>
 .single-post-page {
