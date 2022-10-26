@@ -26,6 +26,9 @@ export default {
         }
       })
       .catch(e => context.error(e))
+  },
+  head: {
+    title: 'One Post'
   }
 };
 </script>
